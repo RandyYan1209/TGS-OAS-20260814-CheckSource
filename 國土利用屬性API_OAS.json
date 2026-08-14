@@ -1,0 +1,249 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "國土測繪圖資雲國土利用屬性API服務",
+    "description": "提供國土測繪圖資雲國土利用屬性API服務",
+    "version": "v1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.nlsc.gov.tw"
+    }
+  ],
+  "tags": [
+    {
+      "name": "國土利用屬性",
+      "description": "國土測繪圖資雲 - 國土利用屬性 API"
+    }
+  ],
+  "paths": {
+    "/other/LandUseCompare/{year1}/{year2}/{towncode}": {
+      "get": {
+        "tags": [
+          "國土利用屬性"
+        ],
+        "summary": "API_國土利用屬性_指定範圍及年度查詢變遷_全國",
+        "description": "API_國土利用屬性_指定範圍及年度查詢變遷_全國",
+        "operationId": "2dms_luseat_v1_LandUseCompare",
+        "x-updateTime": "2026-07-02-00-00-00",
+        "parameters": [
+          {
+            "name": "year1",
+            "in": "path",
+            "required": true,
+            "description": "新年度",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "year2",
+            "in": "path",
+            "required": true,
+            "description": "舊年度",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "towncode",
+            "in": "path",
+            "required": true,
+            "description": "鄉鎮市區代碼",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/LandUseCompareList"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/other/LandUsePointYears/{year}/{x}/{y}/{epsg}": {
+      "get": {
+        "tags": [
+          "國土利用屬性"
+        ],
+        "summary": "API_國土利用屬性_指定坐標及年度查詢屬性_全國",
+        "description": "API_國土利用屬性_指定坐標及年度查詢屬性_全國",
+        "operationId": "2dms_luseat_v1_LandUsePointYears",
+        "x-updateTime": "2026-07-02-00-00-00",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "description": "指定民國年(0為歷年)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x",
+            "in": "path",
+            "required": true,
+            "description": "X坐標",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "y",
+            "in": "path",
+            "required": true,
+            "description": "Y坐標",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "epsg",
+            "in": "path",
+            "required": true,
+            "description": "坐標類別代碼(4326、3826，預設將使用經緯度)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/LandUseList"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LandUseCompareList": {
+        "type": "object",
+        "xml": {
+          "name": "LandUseCompare",
+          "wrapped": true
+        },
+        "properties": {
+          "Change": {
+            "type": "array",
+            "description": "變遷表",
+            "items": {
+              "$ref": "#/components/schemas/LandUseCompareItem"
+            }
+          },
+          "ImageURL": {
+            "type": "string",
+            "format": "uri",
+            "description": "變遷圖URL"
+          },
+          "ImageRect": {
+            "type": "string",
+            "description": "比對範圍座標 (xmin,ymin,xmax,ymax)"
+          }
+        }
+      },
+      "LandUseList": {
+        "type": "array",
+        "xml": {
+          "name": "root",
+          "wrapped": true
+        },
+        "items": {
+          "$ref": "#/components/schemas/LandUseItem"
+        }
+      },
+      "LandUseCompareItem": {
+        "type": "object",
+        "xml": {
+          "name": "Change"
+        },
+        "properties": {
+          "County": {
+            "description": "縣市代碼",
+            "type": "string"
+          },
+          "Town": {
+            "description": "鄉鎮市區代碼",
+            "type": "string"
+          },
+          "Code2Before": {
+            "description": "舊分類代碼",
+            "type": "string"
+          },
+          "Code2After": {
+            "description": "新分類代碼",
+            "type": "string"
+          },
+          "Area": {
+            "description": "變遷面積",
+            "type": "string"
+          }
+        }
+      },
+      "LandUseItem": {
+        "type": "object",
+        "xml": {
+          "name": "ITEM"
+        },
+        "properties": {
+          "YEAR": {
+            "type": "string",
+            "description": "圖磚年份"
+          },
+          "LYEAR": {
+            "type": "string",
+            "description": "調查年度"
+          },
+          "LMONTH": {
+            "type": "string",
+            "description": "調查月份"
+          },
+          "Lcode_C1": {
+            "type": "string",
+            "description": "一級分類代碼"
+          },
+          "Lname_C1": {
+            "type": "string",
+            "description": "一級分類名稱"
+          },
+          "Lcode_C2": {
+            "type": "string",
+            "description": "二級分類代碼"
+          },
+          "Lname_C2": {
+            "type": "string",
+            "description": "二級分類名稱"
+          },
+          "Lcode_C3": {
+            "type": "string",
+            "description": "三級分類代碼"
+          },
+          "LCODE": {
+            "type": "string",
+            "description": "三級分類代碼"
+          },
+          "NAME": {
+            "type": "string",
+            "description": "三級分類名稱"
+          }
+        }
+      }
+    }
+  }
+}

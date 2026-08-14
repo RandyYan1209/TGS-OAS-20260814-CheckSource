@@ -1,0 +1,186 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "國土測繪圖資雲地籍圖API服務",
+    "description": "提供國土測繪圖資雲地籍圖API服務",
+    "version": "v1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.nlsc.gov.tw"
+    }
+  ],
+  "tags": [
+    {
+      "name": "地籍圖",
+      "description": "國土測繪圖資雲 - 地籍圖 API"
+    }
+  ],
+  "paths": {
+    "/dmaps/CadasMapQuery/{county}/{sect}/{landno}/{type}/{epsg}": {
+      "get": {
+        "tags": [
+          "地籍圖"
+        ],
+        "summary": "API_地籍圖_指定地號查詢_全國",
+        "description": "API_地籍圖_指定地號查詢_全國",
+        "operationId": "2dms_cadapi_v1_CadasMapQuery",
+        "x-updateTime": "2026-07-02-00-00-00",
+        "parameters": [
+          {
+            "name": "county",
+            "in": "path",
+            "required": true,
+            "description": "縣市代碼",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sect",
+            "in": "path",
+            "required": true,
+            "description": "地段代碼",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "landno",
+            "in": "path",
+            "required": true,
+            "description": "地號(8碼)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "description": "檔案格式(gml, kml, shp)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "epsg",
+            "in": "path",
+            "required": true,
+            "description": "坐標類別代碼(4326、3826，預設將使用經緯度)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功回應。依據輸入參數 (type / returnType) 回傳對應格式之圖資檔案（GML、KML 或 ESRI Shapefile ZIP 壓縮檔）",
+            "content": {
+              "application/gml+xml": {
+                "schema": {
+                  "type": "string",
+                  "description": "GML (Geography Markup Language) 空間地理標記語言 XML 內容"
+                }
+              },
+              "application/vnd.google-earth.kml+xml": {
+                "schema": {
+                  "type": "string",
+                  "description": "KML (Keyhole Markup Language) Google Earth 空間標記語言 XML 內容"
+                }
+              },
+              "application/zip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "ESRI Shapefile 包含 .shp, .shx, .dbf, .prj 等圖層檔案之 ZIP 壓縮包"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "請求參數錯誤或超出查詢範圍"
+          }
+        }
+      }
+    },
+    "/dmaps/CadasMapPointQuery/{pointX}/{pointY}/{epsg}/{returnType}": {
+      "get": {
+        "tags": [
+          "地籍圖"
+        ],
+        "summary": "API_地籍圖_指定坐標查詢_全國",
+        "description": "API_地籍圖_指定坐標查詢_全國",
+        "operationId": "2dms_cadapi_v1_CadasMapPointQuery",
+        "x-updateTime": "2026-07-02-00-00-00",
+        "parameters": [
+          {
+            "name": "pointX",
+            "in": "path",
+            "required": true,
+            "description": "X坐標",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pointY",
+            "in": "path",
+            "required": true,
+            "description": "Y坐標",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "epsg",
+            "in": "path",
+            "required": true,
+            "description": "坐標類別代碼(4326、3826，預設將使用經緯度)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "returnType",
+            "in": "path",
+            "required": true,
+            "description": "檔案格式(GML,KML,SHP)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功回應。依據輸入參數 (type / returnType) 回傳對應格式之圖資檔案（GML、KML 或 ESRI Shapefile ZIP 壓縮檔）",
+            "content": {
+              "application/gml+xml": {
+                "schema": {
+                  "type": "string",
+                  "description": "GML (Geography Markup Language) 空間地理標記語言 XML 內容"
+                }
+              },
+              "application/vnd.google-earth.kml+xml": {
+                "schema": {
+                  "type": "string",
+                  "description": "KML (Keyhole Markup Language) Google Earth 空間標記語言 XML 內容"
+                }
+              },
+              "application/zip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "ESRI Shapefile 包含 .shp, .shx, .dbf, .prj 等圖層檔案之 ZIP 壓縮包"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "請求參數錯誤或超出查詢範圍"
+          }
+        }
+      }
+    }
+  }
+}

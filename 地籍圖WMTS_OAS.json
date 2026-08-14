@@ -1,0 +1,125 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "國土測繪圖資雲地籍圖WMTS服務",
+    "version": "v1.0",
+    "description": "提供國土測繪圖資雲地籍圖WMTS服務。"
+  },
+  "servers": [
+    {
+      "url": "https://landmaps.nlsc.gov.tw/S_Maps/wmts"
+    }
+  ],
+  "tags": [
+    {
+      "name": "地籍圖 WMTS",
+      "description": "地籍圖 WMTS"
+    }
+  ],
+  "paths": {
+    "/DMAPS/{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}": {
+      "get": {
+        "tags": [
+          "地籍圖 WMTS"
+        ],
+        "summary": "WMTS_地籍圖",
+        "description": "WMTS_地籍圖",
+        "operationId": "2dms_cadwmt_v1_DMAPS",
+        "x-updateTime": "2026-07-02-00-00-00",
+        "parameters": [
+          {
+            "name": "Style",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "default"
+            },
+            "description": "圖樣風格 (預設 default)"
+          },
+          {
+            "name": "TileMatrixSet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "EPSG:3857",
+                "EPSG:4326",
+                "EPSG:3826"
+              ],
+              "default": "EPSG:3857"
+            },
+            "description": "圖磚矩陣集 (座標參考系統)"
+          },
+          {
+            "name": "TileMatrix",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "17"
+            },
+            "description": "縮放層級 (zoom level / matrix level)"
+          },
+          {
+            "name": "TileRow",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 56480
+            },
+            "description": "圖磚行號 (TileRow / Y)"
+          },
+          {
+            "name": "TileCol",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 109468
+            },
+            "description": "圖磚列號 (TileCol / X)"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "image/png",
+                "image/jpeg"
+              ],
+              "default": "image/png"
+            },
+            "description": "輸出圖磚格式"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功回傳 WMTS 圖磚",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "參數錯誤"
+          }
+        }
+      }
+    }
+  }
+}

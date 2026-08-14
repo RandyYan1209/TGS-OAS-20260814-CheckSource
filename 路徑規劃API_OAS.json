@@ -1,0 +1,220 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "國土測繪圖資雲路徑規劃API服務",
+    "description": "提供國土測繪圖資雲路徑規劃API服務",
+    "version": "v1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.nlsc.gov.tw"
+    }
+  ],
+  "tags": [
+    {
+      "name": "路徑規劃",
+      "description": "國土測繪圖資雲 - 路徑規劃 API"
+    }
+  ],
+  "paths": {
+    "/other/RoutesQueryByDist/{beg}/{des}/{type}/{format}": {
+      "get": {
+        "tags": [
+          "路徑規劃"
+        ],
+        "summary": "API_路徑規劃_距離最短路線_全國",
+        "description": "API_路徑規劃_距離最短路線_全國",
+        "operationId": "2dms_route_v1_RoutesQueryByDist",
+        "x-updateTime": "2026-07-02-00-00-00",
+        "parameters": [
+          {
+            "name": "beg",
+            "in": "path",
+            "required": true,
+            "description": "起點(WGS84)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "des",
+            "in": "path",
+            "required": true,
+            "description": "終點(WGS84)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "description": "車種(汽車 car、步行 foot、汽車避開高速公路 avoid_highways，預設為汽車)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "format",
+            "in": "path",
+            "required": true,
+            "description": "檔案格式(預設kmz、json、kml)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功回傳 GIS 資料 (KML / KMZ / GeoJSON)",
+            "content": {
+              "application/vnd.google-earth.kml+xml": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/vnd.google-earth.kmz": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/geo+json": {
+                "schema": {
+                  "type": "object",
+                  "description": "GeoJSON 格式 (FeatureCollection)"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/other/RoutesQueryByTime/{beg}/{des}/{type}/{format}": {
+      "get": {
+        "tags": [
+          "路徑規劃"
+        ],
+        "summary": "API_路徑規劃_時間最短路線_全國",
+        "description": "API_路徑規劃_時間最短路線_全國",
+        "operationId": "2dms_route_v1_RoutesQueryByTime",
+        "x-updateTime": "2026-07-02-00-00-00",
+        "parameters": [
+          {
+            "name": "beg",
+            "in": "path",
+            "required": true,
+            "description": "起點(WGS84)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "des",
+            "in": "path",
+            "required": true,
+            "description": "終點(WGS84)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "description": "車種(汽車 car、步行 foot、汽車避開高速公路 avoid_highways，預設為汽車)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "format",
+            "in": "path",
+            "required": true,
+            "description": "檔案格式(預設kmz、json、kml)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功回傳 GIS 資料 (KML / KMZ / GeoJSON)",
+            "content": {
+              "application/vnd.google-earth.kml+xml": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/vnd.google-earth.kmz": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/geo+json": {
+                "schema": {
+                  "type": "object",
+                  "description": "GeoJSON 格式 (FeatureCollection)"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/other/RoutesNodes/{point}/{crs}/{radius}": {
+      "get": {
+        "tags": [
+          "路徑規劃"
+        ],
+        "summary": "API_路徑規劃_節點查詢_全國",
+        "description": "API_路徑規劃_節點查詢_全國",
+        "operationId": "2dms_route_v1_RoutesNodes",
+        "x-updateTime": "2026-07-02-00-00-00",
+        "parameters": [
+          {
+            "name": "point",
+            "in": "path",
+            "required": true,
+            "description": "查詢點(支援WGS84及TWD97坐標系統)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "crs",
+            "in": "path",
+            "required": true,
+            "description": "坐標代碼(EPSG:4326或EPSG:3826)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "radius",
+            "in": "path",
+            "required": true,
+            "description": "檢索範圍(公尺)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功回傳 CSV 資料",
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "description": "CSV 格式內容"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,350 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "國土測繪圖資雲 WMS 服務",
+    "version": "v1.0",
+    "description": "提供 OGC WMS 標準服務，支援 GetCapabilities、GetMap 與 GetFeatureInfo。"
+  },
+  "servers": [
+    {
+      "url": "https://wms.nlsc.gov.tw"
+    }
+  ],
+  "tags": [
+    {
+      "name": "WMS",
+      "description": "Web Map Service 標準服務"
+    }
+  ],
+  "paths": {
+    "/wms": {
+      "get": {
+        "tags": [
+          "WMS"
+        ],
+        "summary": "WMS",
+        "description": "提供WMS發布服務，圖層包含臺灣通用電子地圖、國土利用現況調查成果圖、段籍圖、1/5000基本地形圖、縣市界、 正射影像、各級學校範圍圖、鄉鎮區、村里界...等。",
+        "operationId": "2dms_wms_v1_WMS",
+        "x-updateTime": "2026-07-02-00-00-00",
+        "parameters": [
+          {
+            "name": "SERVICE",
+            "in": "query",
+            "required": true,
+            "description": "服務類型，固定為 WMS",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "WMS"
+              ],
+              "default": "WMS"
+            }
+          },
+          {
+            "name": "REQUEST",
+            "in": "query",
+            "required": true,
+            "description": "請求操作類型",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "GetCapabilities",
+                "GetMap",
+                "GetFeatureInfo"
+              ],
+              "default": "GetCapabilities"
+            }
+          },
+          {
+            "name": "VERSION",
+            "in": "query",
+            "required": true,
+            "description": "WMS 版本，常用 1.1.1 或 1.3.0",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1.1.1",
+                "1.3.0"
+              ],
+              "default": "1.3.0"
+            }
+          },
+          {
+            "name": "LAYERS",
+            "in": "query",
+            "required": false,
+            "description": "欲查詢圖層（GetMap 使用）\n\n| 代碼 | 名稱 |\n|---|---|\n| EMAP | 臺灣通用電子地圖 |\n| EMAP2 | 臺灣通用電子地圖透明 |\n| EMAP5_OPENDATA | 臺灣通用電子地圖(套疊等高線)OpenData, 最大比例尺一萬八千分之一 |\n| EMAP5 | 臺灣通用電子地圖(等高線+門牌) |\n| EMAP6_OPENDATA | 臺灣通用電子地圖(不含等高線)OpenData, 最大比例尺一萬八千分之一 |\n| EMAP6 | 臺灣通用電子地圖(無等高線) |\n| EMAP7 | TaiwanE-Map(Transparent) |\n| EMAP8 | TaiwanE-Map(EN) |\n| EMAP16 | 臺灣通用電子地圖(無等高線及門牌) |\n| EMAP15 | 臺灣通用電子地圖(等高線無門牌) |\n| EMAP12 | 臺灣通用電子地圖透明(無門牌) |\n| PHOTO2 | 正射影像圖(通用) |\n| B100000 | 1/100000 地形圖 |\n| B25000 | 1/25000 地形圖 |\n| B5000 | 1/5000基本地形圖 |\n| CITY | 縣市界 |\n| LANDSECT | 地段外圍圖(段籍圖) |\n| LUIMAP | 國土利用現況調查成果圖 |\n| MB5000 | 1/5000圖幅框 |\n| ROAD | 道路路網 |\n| SCHOOL | 各級學校範圍圖 |\n| TOWN | 鄉鎮區界 |\n| Village | 村里界 |\n| LUIMAP104 | 國土利用現況調查104年更新區 |\n| LUIMAP105 | 國土利用現況調查105年更新區 |\n| LandOffice | 地政事務所轄區圖 |\n| EMAP9 | 臺灣通用電子地圖(無鐵公路) |\n| EMAPX99 | 臺灣通用電子地圖(無文字) |\n| PHOTO_MIX | 正射影像(混合) |\n| EMAP97 | Taiwan e-Map(new) |\n| EMAP96 | 臺灣通用電子地圖(高DPI字) |\n| EMAP98 | 臺灣通用電子地圖(新) |\n| LUIMAP106 | 國土利用現況調查106年更新區 |\n| LUIMAP01 | 國土利用現況調查-1類農業 |\n| LUIMAP02 | 國土利用現況調查-2類森林 |\n| LUIMAP03 | 國土利用現況調查-3類交通 |\n| LUIMAP04 | 國土利用現況調查-4類水利 |\n| LUIMAP05 | 國土利用現況調查-5類建築 |\n| LUIMAP06 | 國土利用現況調查-6類公共 |\n| LUIMAP07 | 國土利用現況調查-7類遊憩 |\n| LUIMAP08 | 國土利用現況調查-8類礦鹽 |\n| LUIMAP09 | 國土利用現況調查-9類其他 |\n| LUIMAP82 | 國土利用調查成果圖82年 |\n| LUIMAP95 | 國土利用調查成果圖95-97年 |\n| LUIMAP98 | 國土利用現況調查098年更新區 |\n| LUIMAP99 | 國土利用現況調查099年更新區 |\n| LUIMAP100 | 國土利用現況調查100年更新區 |\n| LUIMAP101 | 國土利用現況調查101年更新區 |\n| LUIMAP102 | 國土利用現況調查102年更新區 |\n| LUIMAP103 | 國土利用現況調查103年更新區 |\n| LUIMAP107 | 國土利用現況調查107年更新區 |\n| EMAP01 | 臺灣通用電子地圖(灰階) |\n| MOI_ASPECT | 坡向圖 |\n| MOI_CONTOUR | 等高線圖(2003-2005) |\n| MOI_HILLSHADE | 陰影圖 |\n| MOI_SHADERMAP | 渲染圖 |\n| MOI_SLOPEP_GT30 | 坡度圖-30%坡(2003-2005) |\n| MOI_SLOPEP_LV7 | 坡度圖-7級(2003-2005) |\n| MOI_SLOPEP_GT30_2 | 坡度圖-30%坡(2010-2015) |\n| MOI_SLOPEP_LV7_2 | 坡度圖-7級(2010-2015) |\n| MOI_CONTOUR_2 | 等高線圖(2010-2015) |\n| LUIMAP108 | 國土利用現況調查108年更新區 |\n| ConvenienceStore | 便利商店(超商) |\n| LUIMAP109 | 國土利用現況調查109年更新區 |\n| LANDSECT2 | 地段外圍圖(段籍圖)(類別) |\n| DDEM05 | 空載光達數值地形變異分析圖(0.5M門檻)_第2期減第1期 |\n| DDEM052 | 空載光達數值地形變異分析圖(0.5M門檻)_第3期減第2期 |",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "EMAP",
+                "EMAP2",
+                "EMAP5_OPENDATA",
+                "EMAP5",
+                "EMAP6_OPENDATA",
+                "EMAP6",
+                "EMAP7",
+                "EMAP8",
+                "EMAP16",
+                "EMAP15",
+                "EMAP12",
+                "PHOTO2",
+                "B100000",
+                "B25000",
+                "B5000",
+                "CITY",
+                "LANDSECT",
+                "LUIMAP",
+                "MB5000",
+                "ROAD",
+                "SCHOOL",
+                "TOWN",
+                "Village",
+                "LUIMAP104",
+                "LUIMAP105",
+                "LandOffice",
+                "EMAP9",
+                "EMAPX99",
+                "PHOTO_MIX",
+                "EMAP97",
+                "EMAP96",
+                "EMAP98",
+                "LUIMAP106",
+                "LUIMAP01",
+                "LUIMAP02",
+                "LUIMAP03",
+                "LUIMAP04",
+                "LUIMAP05",
+                "LUIMAP06",
+                "LUIMAP07",
+                "LUIMAP08",
+                "LUIMAP09",
+                "LUIMAP82",
+                "LUIMAP95",
+                "LUIMAP98",
+                "LUIMAP99",
+                "LUIMAP100",
+                "LUIMAP101",
+                "LUIMAP102",
+                "LUIMAP103",
+                "LUIMAP107",
+                "EMAP01",
+                "MOI_ASPECT",
+                "MOI_CONTOUR",
+                "MOI_HILLSHADE",
+                "MOI_SHADERMAP",
+                "MOI_SLOPEP_GT30",
+                "MOI_SLOPEP_LV7",
+                "MOI_SLOPEP_GT30_2",
+                "MOI_SLOPEP_LV7_2",
+                "MOI_CONTOUR_2",
+                "LUIMAP108",
+                "ConvenienceStore",
+                "LUIMAP109",
+                "LANDSECT2",
+                "DDEM05",
+                "DDEM052"
+              ],
+              "default": "EMAP"
+            }
+          },
+          {
+            "name": "STYLES",
+            "in": "query",
+            "required": false,
+            "description": "樣式名稱，可留空代表預設樣式",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "CRS",
+            "in": "query",
+            "required": false,
+            "description": "座標參考系統 (例如 EPSG:3857, EPSG:4326)",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "EPSG:3857",
+                "EPSG:4326",
+                "EPSG:3826",
+                "EPSG:3825"
+              ],
+              "default": "EPSG:3857"
+            }
+          },
+          {
+            "name": "BBOX",
+            "in": "query",
+            "required": false,
+            "description": "邊界框 (minX,minY,maxX,maxY)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "WIDTH",
+            "in": "query",
+            "required": false,
+            "description": "輸出影像寬度（像素）",
+            "schema": {
+              "type": "integer",
+              "default": 256
+            }
+          },
+          {
+            "name": "HEIGHT",
+            "in": "query",
+            "required": false,
+            "description": "輸出影像高度（像素）",
+            "schema": {
+              "type": "integer",
+              "default": 256
+            }
+          },
+          {
+            "name": "FORMAT",
+            "in": "query",
+            "required": false,
+            "description": "輸出影像格式",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "image/png",
+                "image/jpeg"
+              ],
+              "default": "image/png"
+            }
+          },
+          {
+            "name": "QUERY_LAYERS",
+            "in": "query",
+            "required": false,
+            "description": "欲查詢圖層（GetFeatureInfo 使用）\n\n| 代碼 | 名稱 |\n|---|---|\n| EMAP | 臺灣通用電子地圖 |\n| EMAP2 | 臺灣通用電子地圖透明 |\n| EMAP5_OPENDATA | 臺灣通用電子地圖(套疊等高線)OpenData, 最大比例尺一萬八千分之一 |\n| EMAP5 | 臺灣通用電子地圖(等高線+門牌) |\n| EMAP6_OPENDATA | 臺灣通用電子地圖(不含等高線)OpenData, 最大比例尺一萬八千分之一 |\n| EMAP6 | 臺灣通用電子地圖(無等高線) |\n| EMAP7 | TaiwanE-Map(Transparent) |\n| EMAP8 | TaiwanE-Map(EN) |\n| EMAP16 | 臺灣通用電子地圖(無等高線及門牌) |\n| EMAP15 | 臺灣通用電子地圖(等高線無門牌) |\n| EMAP12 | 臺灣通用電子地圖透明(無門牌) |\n| PHOTO2 | 正射影像圖(通用) |\n| B100000 | 1/100000 地形圖 |\n| B25000 | 1/25000 地形圖 |\n| B5000 | 1/5000基本地形圖 |\n| CITY | 縣市界 |\n| LANDSECT | 地段外圍圖(段籍圖) |\n| LUIMAP | 國土利用現況調查成果圖 |\n| MB5000 | 1/5000圖幅框 |\n| ROAD | 道路路網 |\n| SCHOOL | 各級學校範圍圖 |\n| TOWN | 鄉鎮區界 |\n| Village | 村里界 |\n| LUIMAP104 | 國土利用現況調查104年更新區 |\n| LUIMAP105 | 國土利用現況調查105年更新區 |\n| LandOffice | 地政事務所轄區圖 |\n| EMAP9 | 臺灣通用電子地圖(無鐵公路) |\n| EMAPX99 | 臺灣通用電子地圖(無文字) |\n| PHOTO_MIX | 正射影像(混合) |\n| EMAP97 | Taiwan e-Map(new) |\n| EMAP96 | 臺灣通用電子地圖(高DPI字) |\n| EMAP98 | 臺灣通用電子地圖(新) |\n| LUIMAP106 | 國土利用現況調查106年更新區 |\n| LUIMAP01 | 國土利用現況調查-1類農業 |\n| LUIMAP02 | 國土利用現況調查-2類森林 |\n| LUIMAP03 | 國土利用現況調查-3類交通 |\n| LUIMAP04 | 國土利用現況調查-4類水利 |\n| LUIMAP05 | 國土利用現況調查-5類建築 |\n| LUIMAP06 | 國土利用現況調查-6類公共 |\n| LUIMAP07 | 國土利用現況調查-7類遊憩 |\n| LUIMAP08 | 國土利用現況調查-8類礦鹽 |\n| LUIMAP09 | 國土利用現況調查-9類其他 |\n| LUIMAP82 | 國土利用調查成果圖82年 |\n| LUIMAP95 | 國土利用調查成果圖95-97年 |\n| LUIMAP98 | 國土利用現況調查098年更新區 |\n| LUIMAP99 | 國土利用現況調查099年更新區 |\n| LUIMAP100 | 國土利用現況調查100年更新區 |\n| LUIMAP101 | 國土利用現況調查101年更新區 |\n| LUIMAP102 | 國土利用現況調查102年更新區 |\n| LUIMAP103 | 國土利用現況調查103年更新區 |\n| LUIMAP107 | 國土利用現況調查107年更新區 |\n| EMAP01 | 臺灣通用電子地圖(灰階) |\n| MOI_ASPECT | 坡向圖 |\n| MOI_CONTOUR | 等高線圖(2003-2005) |\n| MOI_HILLSHADE | 陰影圖 |\n| MOI_SHADERMAP | 渲染圖 |\n| MOI_SLOPEP_GT30 | 坡度圖-30%坡(2003-2005) |\n| MOI_SLOPEP_LV7 | 坡度圖-7級(2003-2005) |\n| MOI_SLOPEP_GT30_2 | 坡度圖-30%坡(2010-2015) |\n| MOI_SLOPEP_LV7_2 | 坡度圖-7級(2010-2015) |\n| MOI_CONTOUR_2 | 等高線圖(2010-2015) |\n| LUIMAP108 | 國土利用現況調查108年更新區 |\n| ConvenienceStore | 便利商店(超商) |\n| LUIMAP109 | 國土利用現況調查109年更新區 |\n| LANDSECT2 | 地段外圍圖(段籍圖)(類別) |\n| DDEM05 | 空載光達數值地形變異分析圖(0.5M門檻)_第2期減第1期 |\n| DDEM052 | 空載光達數值地形變異分析圖(0.5M門檻)_第3期減第2期 |",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "EMAP",
+                "EMAP2",
+                "EMAP5_OPENDATA",
+                "EMAP5",
+                "EMAP6_OPENDATA",
+                "EMAP6",
+                "EMAP7",
+                "EMAP8",
+                "EMAP16",
+                "EMAP15",
+                "EMAP12",
+                "PHOTO2",
+                "B100000",
+                "B25000",
+                "B5000",
+                "CITY",
+                "LANDSECT",
+                "LUIMAP",
+                "MB5000",
+                "ROAD",
+                "SCHOOL",
+                "TOWN",
+                "Village",
+                "LUIMAP104",
+                "LUIMAP105",
+                "LandOffice",
+                "EMAP9",
+                "EMAPX99",
+                "PHOTO_MIX",
+                "EMAP97",
+                "EMAP96",
+                "EMAP98",
+                "LUIMAP106",
+                "LUIMAP01",
+                "LUIMAP02",
+                "LUIMAP03",
+                "LUIMAP04",
+                "LUIMAP05",
+                "LUIMAP06",
+                "LUIMAP07",
+                "LUIMAP08",
+                "LUIMAP09",
+                "LUIMAP82",
+                "LUIMAP95",
+                "LUIMAP98",
+                "LUIMAP99",
+                "LUIMAP100",
+                "LUIMAP101",
+                "LUIMAP102",
+                "LUIMAP103",
+                "LUIMAP107",
+                "EMAP01",
+                "MOI_ASPECT",
+                "MOI_CONTOUR",
+                "MOI_HILLSHADE",
+                "MOI_SHADERMAP",
+                "MOI_SLOPEP_GT30",
+                "MOI_SLOPEP_LV7",
+                "MOI_SLOPEP_GT30_2",
+                "MOI_SLOPEP_LV7_2",
+                "MOI_CONTOUR_2",
+                "LUIMAP108",
+                "ConvenienceStore",
+                "LUIMAP109",
+                "LANDSECT2",
+                "DDEM05",
+                "DDEM052"
+              ],
+              "default": "EMAP"
+            }
+          },
+          {
+            "name": "INFO_FORMAT",
+            "in": "query",
+            "required": false,
+            "description": "GetFeatureInfo 回應格式 (如 text/html, application/json)",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "text/html",
+                "application/xml"
+              ],
+              "default": "application/json"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功回傳 WMS 回應",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "請求參數錯誤"
+          }
+        }
+      }
+    }
+  }
+}

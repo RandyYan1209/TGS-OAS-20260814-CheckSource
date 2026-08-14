@@ -1,0 +1,173 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "國土測繪圖資雲國土利用現況調查成果圖WFS服務",
+    "description": "提供國土測繪圖資雲國土利用現況調查成果圖WFS服務",
+    "version": "v1.0"
+  },
+  "servers": [
+    {
+      "url": "https://wfs.nlsc.gov.tw/WFS"
+    }
+  ],
+  "paths": {
+    "/LUIMAP": {
+      "get": {
+        "tags": [
+          "國土利用現況調查成果圖 WFS"
+        ],
+        "summary": "WFS_國土利用現況調查成果圖",
+        "description": "WFS_國土利用現況調查成果圖",
+        "operationId": "2dms_luwfs_v1_LuiMap",
+        "x-updateTime": "2026-07-02-00-00-00",
+        "parameters": [
+          {
+            "name": "SERVICE",
+            "in": "query",
+            "required": true,
+            "description": "服務類型，固定為 WFS",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "WFS"
+              ],
+              "default": "WFS"
+            }
+          },
+          {
+            "name": "REQUEST",
+            "in": "query",
+            "required": true,
+            "description": "請求操作類型。支援 GetCapabilities, DescribeFeatureType, GetFeature",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "GetCapabilities",
+                "DescribeFeatureType",
+                "GetFeature"
+              ],
+              "default": "GetCapabilities"
+            }
+          },
+          {
+            "name": "VERSION",
+            "in": "query",
+            "required": true,
+            "description": "OGC WFS 版本號。系統支援 1.0.0, 1.1.0, 2.0.0",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1.0.0",
+                "1.1.0",
+                "2.0.0"
+              ],
+              "default": "1.1.0"
+            }
+          },
+          {
+            "name": "TYPENAME",
+            "in": "query",
+            "required": false,
+            "description": "圖層名稱 (WFS 1.0.0 / 1.1.0 專用)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "TYPENAMES",
+            "in": "query",
+            "required": false,
+            "description": "圖層名稱 (WFS 2.0.0 專用)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SRSName",
+            "in": "query",
+            "required": false,
+            "description": "座標參考系統 (例如 EPSG:3857, EPSG:4326, EPSG:3826)",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "EPSG:3857",
+                "EPSG:4326",
+                "EPSG:3826",
+                "EPSG:3825"
+              ],
+              "default": "EPSG:4326"
+            }
+          },
+          {
+            "name": "BBOX",
+            "in": "query",
+            "required": false,
+            "description": "邊界框 (minX,minY,maxX,maxY)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "outputFormat",
+            "in": "query",
+            "required": false,
+            "description": "回傳檔案格式",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "GML"
+              ],
+              "default": "GML"
+            }
+          },
+          {
+            "name": "MAXFEATURES",
+            "in": "query",
+            "required": false,
+            "description": "最大回傳圖徵筆數 (WFS 1.0/1.1 專用)",
+            "schema": {
+              "type": "integer",
+              "example": 1000
+            }
+          },
+          {
+            "name": "COUNT",
+            "in": "query",
+            "required": false,
+            "description": "最大回傳圖徵筆數 (WFS 2.0 專用)",
+            "schema": {
+              "type": "integer",
+              "example": 1000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功回應 (依據 outputFormat 回傳 GML/XML、GeoJSON 或 ZIP 檔案)",
+            "content": {
+              "application/gml+xml": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/geo+json": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/zip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "請求參數錯誤或語法無效"
+          }
+        }
+      }
+    }
+  }
+}
